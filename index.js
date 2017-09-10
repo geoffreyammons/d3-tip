@@ -8,24 +8,19 @@
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module with d3 as a dependency.
-    define([
-      'd3-collection',
-      'd3-selection'
-    ], factory)
+    define(['d3'], factory)
   } else if (typeof module === 'object' && module.exports) {
     /* eslint-disable global-require */
     // CommonJS
-    var d3Collection = require('d3-collection'),
-        d3Selection = require('d3-selection')
-    module.exports = factory(d3Collection, d3Selection)
+    var d3 = require('d3')
+    module.exports = factory(d3)
     /* eslint-enable global-require */
   } else {
     // Browser global.
-    var d3 = root.d3
     // eslint-disable-next-line no-param-reassign
-    root.d3.tip = factory(d3, d3)
+    root.d3.tip = factory(root.d3)
   }
-}(this, function(d3Collection, d3Selection) {
+}(this, function(d3) {
   // Public - contructs a new tooltip
   //
   // Returns a tip
@@ -99,7 +94,7 @@
       }
 
       var args =  Array.prototype.slice.call(arguments)
-      d3Selection.selection.prototype.attr.apply(getNodeEl(), args)
+      d3.selection.prototype.attr.apply(getNodeEl(), args)
       return tip
     }
 
@@ -117,7 +112,7 @@
       }
 
       var args = Array.prototype.slice.call(arguments)
-      d3Selection.selection.prototype.style.apply(getNodeEl(), args)
+      d3.selection.prototype.style.apply(getNodeEl(), args)
       return tip
     }
 
@@ -185,7 +180,7 @@
     function d3TipOffset() { return [0, 0] }
     function d3TipHTML() { return ' ' }
 
-    var directionCallbacks = d3Collection.map({
+    var directionCallbacks = d3.map({
           n:  directionNorth,
           s:  directionSouth,
           e:  directionEast,
@@ -262,7 +257,7 @@
     }
 
     function initNode() {
-      var div = d3Selection.select(document.createElement('div'))
+      var div = d3.select(document.createElement('div'))
       div
         .style('position', 'absolute')
         .style('top', 0)
@@ -286,7 +281,7 @@
         // re-add node to DOM
         rootElement.appendChild(node)
       }
-      return d3Selection.select(node)
+      return d3.select(node)
     }
 
     // Private - gets the screen coordinates of a shape
@@ -303,7 +298,7 @@
     //
     // Returns an Object {n, s, e, w, nw, sw, ne, se}
     function getScreenBBox() {
-      var targetel   = target || d3Selection.event.target
+      var targetel   = target || d3.event.target
 
       while (targetel.getScreenCTM == null && targetel.parentNode == null) {
         targetel = targetel.parentNode
