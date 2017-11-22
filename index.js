@@ -65,8 +65,8 @@
       while (i--) nodel.classed(directions[i], false)
       coords = directionCallbacks.get(dir).apply(this)
       nodel.classed(dir, true)
-        .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
-        .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
+        .style('top', (coords.top + poffset[1]) + scrollTop + 'px')
+        .style('left', (coords.left + poffset[0]) + scrollLeft + 'px')
 
       return tip
     }
