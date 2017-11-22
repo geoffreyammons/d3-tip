@@ -32,7 +32,7 @@
         node        = initNode(),
         svg         = null,
         point       = null,
-        target      = null
+        target      = null;
 
     function tip(vis) {
       svg = getSVGNode(vis)
@@ -59,8 +59,10 @@
           scrollLeft = document.documentElement.scrollLeft ||
             rootElement.scrollLeft
 
+      if (tip.style('position') === 'fixed') { scrollTop = 0; scrollLeft = 0; }
+
       nodel.html(content)
-        .style('opacity', 1).style('pointer-events', 'all')
+        .style('opacity', 1) //.style('pointer-events', 'all')
 
       while (i--) nodel.classed(directions[i], false)
       coords = directionCallbacks.get(dir).apply(this)
